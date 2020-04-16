@@ -1,0 +1,67 @@
+%System of Equations
+%This Section of code takes input from the user in the form of equations.
+n = input("No. of Equations ?")             
+A = zeros(n);
+b = zeros(n,1);
+D = zeros(n);
+C = zeros(n);                   % DX = CX + b
+B = zeros(n);                   % X = BX + c
+c = zeros(n);          
+
+for i = 1:n
+    for j = 1:n
+        A(i,j) = input("");
+    end
+    b(i,1) = input("");
+end
+A
+b
+
+for i = 1:n
+    D(i,i) = A(i,i);
+end
+D
+
+for i = 1:n
+    for j = 1:n
+        if j ~= i
+            C(i,j) = -A(i,j);
+        end
+    end
+end
+C
+
+B = inv(D)*C
+c = inv(D)*b
+%Checking Convergence
+if norm(B,'inf') < 1
+    disp("Jacobi Method converges for any initial guess.")
+    converge = 1;
+else 
+    disp("Jacobi Method does not converge")
+    converge = 0;
+end
+%Iterations
+eps = input("Value of Epsilon for stopping the iteraions")
+r = zeros(n,1);
+iteration = 0;
+disp("Give the initial guess")
+
+for i = 1:n
+    X(i,1) = input("");
+end
+X
+
+while true
+    X = B*X + c
+    r = b - A*X;
+    iteration = iteration + 1;
+    if norm(r,'inf') < eps
+        break
+    end
+    if converge == 0 && iteration == 5
+        break
+    end
+    
+end
+%iteration
